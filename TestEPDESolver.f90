@@ -1,6 +1,6 @@
 program TestEPDESolver
 
-  ! gfortran -O3 -fdefault-real-8 -o execTest TestEPDESolver.f90 TestProblem1.f90 TestProblem2.f90 MultigridDataStructures.f90 preProcessingEPDE.f90 MatrixVectorProductMultigrid.f90 SmootherPML.f90 MultigridGridTransferOperators.f90 MultigridMethodsEllipticOperator.f90 extraSubroutines.f90
+  ! gfortran -O3 -fdefault-real-8 -o execTest TestEPDESolver.f90 TestProblem1.f90 TestProblem2.f90 TestProblem3.f90 MultigridDataStructures.f90 preProcessingEPDE.f90 MatrixVectorProductMultigrid.f90 SmootherPML.f90 MultigridGridTransferOperators.f90 MultigridMethodsEllipticOperator.f90 extraSubroutines.f90
   use MultigridDataStructures
   use preProcessingEPDE
   use MatrixVectorProductMultigrid
@@ -8,7 +8,8 @@ program TestEPDESolver
   use MultigridGridTransferOperators
   use MultigridMethodsEllipticOperator
   use TestProblem1
-  use TestProblem2 
+  use TestProblem2
+  use TestProblem3
 
   character(len=*), parameter :: smoother = 'FC-GS'
   character(len=*), parameter  :: cycleType = 'W'
@@ -40,6 +41,15 @@ program TestEPDESolver
       evaluateTrueSolutionTest2, smoother, cycleType, numGrids, &
       orderRestriction, orderInterpolation, totalIterations, preSweeps, &
       postSweeps, leftEndpoint, rightEndpoint)
+
+  case (3)
+
+    call MultigridSolverEllipticEquationA(evaluateParametersEPDETest3, &
+      evaluatewaveNumberSquaredTest3, evaluateRHSTest3, &
+      evaluateTrueSolutionTest3, smoother, cycleType, numGrids, &
+      orderRestriction, orderInterpolation, totalIterations, preSweeps, &
+      postSweeps, leftEndpoint, rightEndpoint)
+
   case default
 
     call MultigridSolverEllipticEquationA(evaluateParametersEPDETest1, &
